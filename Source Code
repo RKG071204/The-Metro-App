@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Metro App</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url("/THE_METRO_APP/Background.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body>
+  <header class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+        <img src="/THE_METRO_APP/Logo.png" width="30" height="30" class="d-inline-block align-top" alt="Metro Logo">
+        METRO APP
+      </a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">ABOUT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">HELP</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">USER</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h2 class="text-center text-dark">Metro Fare Calculator</h2>
+        <form id="metro-form">
+          <div class="form-group">
+            <label for="select-station">Select Station:</label>
+            <select class="form-control" id="select-station">
+              <option value="">Select Station</option>
+              <option value="A-D">A</option>
+              <option value="A-D">B</option>
+              <option value="A-D">C</option>
+              <option value="A-D">D</option>
+              <option value="E-H">E</option>
+              <option value="E-H">F</option>
+              <option value="E-H">G</option>
+              <option value="E-H">H</option>
+              <option value="I-L">I</option>
+              <option value="I-L">J</option>
+              <option value="I-L">K</option>
+              <option value="I-L">L</option>
+              <option value="M-P">M</option>
+              <option value="M-P">N</option>
+              <option value="M-P">O</option>
+              <option value="M-P">P</option>
+              <option value="Q-T">Q</option>
+              <option value="Q-T">R</option>
+              <option value="Q-T">S</option>
+              <option value="Q-T">T</option>
+              <option value="U-W">U</option>
+              <option value="U-W">V</option>
+              <option value="U-W">W</option>
+              <option value="X-Z">X</option>
+              <option value="X-Z">Y</option>
+              <option value="X-Z">Z</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="destination">Destination:</label>
+            <select class="form-control" id="destination">
+              <option value="">Select Destination</option>
+              <option value="A-D">A</option>
+              <option value="A-D">B</option>
+              <option value="A-D">C</option>
+              <option value="A-D">D</option>
+              <option value="E-H">E</option>
+              <option value="E-H">F</option>
+              <option value="E-H">G</option>
+              <option value="E-H">H</option>
+              <option value="I-L">I</option>
+              <option value="I-L">J</option>
+              <option value="I-L">K</option>
+              <option value="I-L">L</option>
+              <option value="M-P">M</option>
+              <option value="M-P">N</option>
+              <option value="M-P">O</option>
+              <option value="M-P">P</option>
+              <option value="Q-T">Q</option>
+              <option value="Q-T">R</option>
+              <option value="Q-T">S</option>
+              <option value="Q-T">T</option>
+              <option value="U-W">U</option>
+              <option value="U-W">V</option>
+              <option value="U-W">W</option>
+              <option value="X-Z">X</option>
+              <option value="X-Z">Y</option>
+              <option value="X-Z">Z</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="payment-methods">Payment Methods:</label>
+            <select class="form-control" id="payment-methods">
+            <option value="">Select Payment-Methods</option>
+              <option value="token">TOKEN</option>
+              <option value="card">CARD (10% Discount)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fare">Fare:</label>
+            <input type="text" class="form-control" id="fare" readonly>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-primary" id="calculate-btn">CALCULATE</button>
+            <button type="button" class="btn btn-secondary" id="reset-btn">RESET</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="bg-light mt-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+           17-May-2023 Metro App. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    // Add event listener to the calculate button
+    document.getElementById('calculate-btn').addEventListener('click', calculateFare);
+    
+    // Add event listener to the reset button
+    document.getElementById('reset-btn').addEventListener('click', resetForm);
+    
+    // Calculate fare based on the selected options
+    function calculateFare() {
+      var selectStation = document.getElementById('select-station').value;
+      var destination = document.getElementById('destination').value;
+      var paymentMethod = document.getElementById('payment-methods').value;
+      var fare = 0;
+      
+      if (selectStation && destination) {
+        if (selectStation === destination) {
+          fare = 0;
+        } else if (selectStation === 'A-D' && destination === 'E-H') {
+          fare = 10;
+        } else if (selectStation === 'E-H' && destination === 'I-L') {
+          fare = 20;
+        } else if (selectStation === 'I-L' && destination === 'M-P') {
+          fare = 30;
+        } else if (selectStation === 'M-P' && destination === 'Q-T') {
+          fare = 40;
+        } else if (selectStation === 'Q-T' && destination === 'U-W') {
+          fare = 50;
+        } else if (selectStation === 'U-W' && destination === 'X-Z') {
+          fare = 60;
+        } else {
+          fare = 70;
+        }
+        
+        if (paymentMethod === 'card') {
+          fare = fare - (fare * 0.1);
+        }
+      }
+      
+      document.getElementById('fare').value = fare;
+    }
+    
+    // Reset the form to default values
+    function resetForm() {
+      document.getElementById('select-station').value = '';
+      document.getElementById('destination').value = '';
+      document.getElementById('payment-methods').value = 'token';
+      document.getElementById('fare').value = '';
+    }
+  </script>
+</body>
+</html>
